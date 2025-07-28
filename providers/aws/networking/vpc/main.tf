@@ -1,4 +1,4 @@
-# Recurso VPC
+# VPC
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
 
@@ -7,7 +7,7 @@ resource "aws_vpc" "main" {
   }
 }
 
-# Recurso de subredes
+# Subnets
 resource "aws_subnet" "subnets" {
   count = length(var.subnet_cidr_blocks)
 
@@ -19,7 +19,7 @@ resource "aws_subnet" "subnets" {
   }
 }
 
-# Recurso de tabla de enrutamiento y asociación
+# Route tables and association
 resource "aws_route_table" "rt" {
   vpc_id = aws_vpc.main.id
 
@@ -40,7 +40,7 @@ resource "aws_route_table_association" "rta" {
   route_table_id = aws_route_table.rt.id
 }
 
-# Recurso de Internet Gateway
+# Internet Gateway
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -49,14 +49,14 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-# Recurso de Security Group
+# Security Group
 resource "aws_security_group" "main" {
   name_prefix = "MyReusableSG-"
 
   vpc_id = aws_vpc.main.id
 
-  # Puedes agregar reglas de seguridad aquí según tus necesidades
-  # Por ejemplo, abrir el puerto 22 para SSH:
+  # You can add security rules as you need.
+  # For example, open SSH port (22):
   # ingress {
   #   from_port   = 22
   #   to_port     = 22
@@ -64,7 +64,7 @@ resource "aws_security_group" "main" {
   #   cidr_blocks = ["0.0.0.0/0"]
   # }
 
-  # O permitir todo el tráfico dentro del grupo de seguridad:
+  # ...or allow all traffic in the security group:
   # ingress {
   #   from_port   = 0
   #   to_port     = 0
