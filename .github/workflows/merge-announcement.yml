@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Post to Mastodon
         run: |
-          MESSAGE="🔥 New master version of ${{ github.repository }}! 🔥
-          Author: ${{ github.event.head_commit.author.name }}
-          Info: ${{ github.event.head_commit.message }}
-          Commit: ${{ github.event.head_commit.url }}
+          MESSAGE="New master version of ${{ github.repository }}! 🔥
+          
+          ${{ github.event.head_commit.message }}
+          
+          ${{ github.event.head_commit.url }}
           
           #Terraform #IaC #Cloud #Computing #SRE #DevOps #AWS"
 
